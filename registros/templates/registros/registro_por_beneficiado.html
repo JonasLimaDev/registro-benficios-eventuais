@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Registros das Entregas
+{% endblock title %}
+{% block title_page %}Registro Por Beneficiado{% endblock title_page %}
+{% block main %}
+<div class="container-fluid  bg-light my-2">
+    <div class="container-fluid">
+  <form method="post" >
+    {%csrf_token%}
+    <label for="nomesDataList" class="form-label my-2">Selecione o Nome do Beneficiado</label>
+    <input class="form-control" list="datalistOptions" id="nomesDataList" placeholder="Nome do Usuário..."
+      onchange="this.form.submit()" name="beneficiado" autocomplete="off">
+    <datalist id="datalistOptions">
+      {% for beneficiado in lista_beneficiados %}
+      <option value="{{beneficiado}}">
+        {% endfor %}
+    </datalist>
+  </form>
+</div>
+<hr>
+<div class="container-expand mx-3 my-5 p-1 bg-light">
+
+  {%if registro %}
+  
+  <div class="card-header">
+    <div class="d-flex w-100 justify-content-between">
+      <h5 class="mb-1 text-dark" style="text-transform: none;">{{registro.nome}}</h5>
+
+      <div class="btn-group" role="group" aria-label="Basic outlined example">
+        <a href="{% url 'adicionar_registro' registro.id %}" class="btn btn-outline-primary">Adicionar Registro</a>
+        <a href="{% url 'beneficiado' registro.id %}" class="btn btn-outline-primary">Dados do Beneficiado</a>
+
+      </div>
+    </div>
+    {% if registro.endereco %}
+    <p class="mb-1">{{registro.endereco}}</p>
+    {%else%}
+    <p class="mb-1">Endreço não registrado</p>
+    {%endif%}
+
+  </div>
+  <!--dados do Registro -->
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Benefício</th>
+        <th scope="col">Quantidade</th>
+        <th scope="col">Data da Entrega</th>
+        <th scope="col">Orgão Responsável</th>
+        <th scope="col">Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for beneficio in registro.registros %}
+      <tr>
+
+        <td>{{beneficio.tipo_beneficio}}</td>
+        <td>{{beneficio.quantidade}}</td>
+        <td>{{beneficio.data_entrega}}</td>
+        <td>{{beneficio.orgao_responsavel}}</td>
+        <td>{{beneficio.get_status_display}}</td>
+        
+        
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% else %}
+<h5 class="text-center my-3">Nenhum Registro Selecionado</h5>
+{% endif %}
+</div>
+{% endblock main %}

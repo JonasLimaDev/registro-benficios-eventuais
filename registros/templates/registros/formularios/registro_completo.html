@@ -1,0 +1,310 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Registrar Entrega
+{% endblock title %}
+{% load filtros %}
+{% block title_page %}Novo Registro de Entrega{% endblock title_page %}
+{% block main %}
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+	<symbol id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
+		<path
+			d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
+	</symbol>
+	<symbol id="info-fill" fill="currentColor" viewBox="0 0 16 16">
+		<path
+			d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z" />
+	</symbol>
+	<symbol id="exclamation-triangle-fill" fill="currentColor" viewBox="0 0 16 16">
+		<path
+			d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
+	</symbol>
+</svg>
+<form method="post">
+	{%csrf_token%}
+	<div class="container-expand mx-3 my-5 pt-1">
+		<section class="section border-secondary m-2" style="border: solid 1px; ">
+			<div class="card border-secondary ms-4" style=" width: 18rem; margin-top: -20px">
+				<h5 class="card-title text-black-50 p-2">Dados do Benefício </h5>
+			</div>
+			<div class="row my-2 p-2">
+				<div class="col-md-6 col-sm-12 mt-2 mx-auto">
+					<!--Exibição dos erros-->
+
+
+					<div class="form-floating">
+						{{form2.orgao_responsavel}}
+						<label for="floatingInput">{{form2.orgao_responsavel.label}}</label>
+					</div>
+				</div>
+
+				<div class="col-md-6 col-sm-12 mt-2 mx-auto">
+					<div class="form-floating">
+						{{form2.tipo_beneficio}}
+						<label for="floatingSelect">{{form2.tipo_beneficio.label}}</label>
+					</div>
+
+				</div>
+
+
+				<div class="row my-2 p-2">
+					<div class="col-md-4 col-sm-12 mt-2 mx-auto">
+						{% for erro in form2.quantidade.errors %}
+						<div class="alert alert-danger d-flex align-items-center my-2 " role="alert">
+							<svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:">
+								<use xlink:href="#exclamation-triangle-fill" /></svg>
+							<div>
+								{{erro}}
+							</div>
+						</div>
+						{%endfor%}
+						<div class="form-floating">
+
+							{%if form2.quantidade.errors%}
+							{{form2.quantidade|addclass:'form-control is-invalid'}}
+							{% else %}
+							{{form2.quantidade}}
+							{% endif %}
+							<label for="floatingInput">{{form2.quantidade.label}}</label>
+						</div>
+					</div>
+
+					<div class="col-md-4 col-sm-12 mt-2 mx-auto">
+
+						<div class="form-floating">
+
+							{%if form2.data_entrega.errors%}
+							{{form2.data_entrega|addclass:'form-control is-invalid'}}
+							{% else %}
+							{{form2.data_entrega}}
+							{% endif %}
+							<label for="floatingInput">{{form2.data_entrega.label}}</label>
+						</div>
+						{% for erro in form2.data_entrega.errors %}
+						<div class="alert alert-danger d-flex align-items-center my-2 " role="alert">
+							<svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:">
+								<use xlink:href="#exclamation-triangle-fill" /></svg>
+							<div>
+								{{erro}}
+							</div>
+						</div>
+						{%endfor%}
+					</div>
+					<div class="col-md-4 col-sm-12 mt-2 mx-auto">
+						<div class="form-floating">
+							{{form2.status}}
+							<label for="floatingInput">{{form2.status.label}}</label>
+						</div>
+					</div>
+				</div>
+		</section>
+	</div>
+
+	<div class="container-expand mx-3 my-5 ">
+		<section class="section border-secondary m-2" style="border: solid 1px; ">
+			<div class="card border-secondary ms-4 " style=" max-width: 18rem; margin-top: -20px">
+				<h5 class="card-title text-black-50 p-2">Dados Pessoais</h5>
+			</div>
+			<div class="row  p-2">
+
+				<div class="col-md-8 col-sm-12 mt-2 mx-auto">
+					<div class="form-floating">
+						{%if form.nome.errors%}
+						{{form.nome|addclass:'form-control is-invalid'}}
+						{% else %}
+						{{form.nome}}
+						{% endif %}
+						<label for="{{form.nome.id_for_label}}">{{form.nome.label}}</label>
+
+					</div>
+					{% for erro in form.nome.errors %}
+					<div class="alert alert-danger d-flex align-items-center my-2" role="alert">
+						<svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:">
+							<use xlink:href="#exclamation-triangle-fill" /></svg>
+						<div>
+							{{erro}}
+						</div>
+					</div>
+					{%endfor%}
+
+
+
+				</div>
+
+				<div class="col-md-4 col-sm-12 mt-2 mx-auto">
+					<div class="form-floating">
+						{%if form.data_nascimento.errors%}
+						{{form.data_nascimento|addclass:'form-control is-invalid'}}
+						{% else %}
+						{{form.data_nascimento}}
+						{% endif %}
+						<label for="{{form.data_nascimento.id_for_label}}">{{form.data_nascimento.label}}</label>
+					</div>
+					{% for erro in form.data_nascimento.errors %}
+					<div class="alert alert-danger d-flex align-items-center my-2" role="alert">
+						<svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:">
+							<use xlink:href="#exclamation-triangle-fill" /></svg>
+						<div>
+							{{erro}}
+						</div>
+					</div>
+					{%endfor%}
+
+
+				</div>
+
+			</div>
+			<div class="row p-2 ">
+				<div class="col-md-4 col-sm-12 mt-2 mx-auto">
+					<!--Exibição dos erros-->
+
+					<div class="form-floating">
+
+						{%if form.cpf.errors%}
+						{{form.cpf|addclass:'form-control is-invalid'}}
+						{% else %}
+						{{form.cpf}}
+						{% endif %}
+						<label for="{{form.cpf.id_for_label}}">{{form.cpf.label}}</label>
+						<div id="cpfHelpBlock" class="mx-2 form-text">
+							Apenas os números, sem pontos e sem traço, ex: 00011122215
+						</div>
+					</div>
+					{% for erro in form.cpf.errors %}
+					<div class="alert alert-danger d-flex align-items-center my-2" role="alert">
+						<svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:">
+							<use xlink:href="#exclamation-triangle-fill" /></svg>
+						<div>
+							{{erro}}
+						</div>
+					</div>
+					{%endfor%}
+
+
+				</div>
+				<div class="col-md-4 col-sm-12 mt-2 mx-auto">
+					<!--Exibição dos erros-->
+					<div class="form-floating">
+						{%if form.rg.errors%}
+						{{form.rg|addclass:'form-control is-invalid'}}
+						{% else %}
+						{{form.rg}}
+						{% endif %}
+						<label for="{{form.rg.id_for_label}}">{{form.rg.label}}</label>
+					</div>
+					{% for erro in form.rg.errors %}
+					<div class="alert alert-danger d-flex align-items-center my-1 " role="alert">
+						<svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:">
+							<use xlink:href="#exclamation-triangle-fill" /></svg>
+						<div>
+							{{erro}}
+						</div>
+					</div>
+					{%endfor%}
+
+
+				</div>
+				<div class="col-md-4 col-sm-12 mt-2 mx-auto">
+					<div class="form-floating">
+						{{form.contato}}
+						<label for="floatingInput">{{form.contato.label}}</label>
+					</div>
+					<!--Exibição dos erros-->
+					{% for erro in form.contato.errors %}
+					<div class="alert alert-danger d-flex align-items-center my-1 " role="alert">
+						<svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:">
+							<use xlink:href="#exclamation-triangle-fill" /></svg>
+						<div>
+							{{erro}}
+						</div>
+					</div>
+					{%endfor%}
+
+				</div>
+
+			</div>
+		</section>
+	</div>
+
+	<div class="container-expand mx-3 my-5">
+		<section class="section border-secondary m-2" style="border: solid 1px">
+			<div class="card border-secondary ms-4" style="width: 18rem; margin-top: -20px">
+				<h5 class=" card-title text-black-50 p-2">Endereço do Beneficiado</h5>
+			</div>
+			<div class="row p-2">
+				<div class="col-md-8 col-sm-12 mt-2 mx-auto">
+					<div class="form-floating">
+						{{form.endereco}}
+						<label for="form.endereco.id_for_label">{{form.endereco.label}}</label>
+						<div id="enderecoHelpBlock" class="mx-2 form-text">
+							Exemplos: Rua: Dragão do Mar; Av. João Rodrigues; Tv. Pedro Gomes.
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4 col-sm-12 mt-2 mx-auto">
+					<div class="form-floating">
+						{{form.numero}}
+						<label for="{{form.numero.id_for_label}}">{{form.numero.label}}</label>
+						<div id="enderecoHelpBlock" class="mx-2 form-text">
+							Exemplo: 2937; Lote 22.
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row  p-2">
+
+				<div class="col-md-6 col-sm-12 mt-2 mx-auto">
+					<div class="form-floating">
+						{{form.bairro}}
+						<label for="{{form.bairro.id_for_label}}">{{form.bairro.label}}</label>
+					</div>
+				</div>
+				<div class="col-md-6 col-sm-12 mt-2 mx-auto">
+					<div class="form-floating">
+						{{form.complemento}}
+						<label for="{{form.complemento.id_for_label}}">{{form.complemento.label}}</label>
+						<div id="enderecoHelpBlock" class="mx-2 form-text">
+							Exemplos: Casa 04; Casa B; Quadra(Qd.) 12.
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</section>
+		<div class="container-expand my-3 d-flex justify-content-center align-items-center">
+			<button class="btn btn-success w-50">Enviar</button>
+		</div>
+	</div>
+
+</form>
+
+<!-- <div class="container-expand mt-4" >
+		<section class="section border-secondary " style="border: solid 1px; ">
+			<div class="card border-secondary ms-4" style=" width: 18rem; margin-top: -15px">
+				<h5 class="card-title text-black-50 p-2" style="">Relatório de Solicitação</h5>
+			</div>
+			<div class="row my-2 p-2 ">
+				<div class="col-12">
+					
+					<div class="form-floating mb-3">
+						<textarea class="form-control " placeholder="Leave a comment here" id="floatingTextarea2" style="height: 200px"></textarea>
+						<label class="" for="floatingTextarea2">Apresentação</label>
+					</div>
+				</div>
+				<div class="col-12">
+					
+					<div class="form-floating mb-3">
+						<textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 200px"></textarea>
+						<label class="" for="floatingTextarea2">Situação Apresentada</label>
+					</div>
+				</div>
+				<div class="col-12">
+					<div class="form-floating mb-3">
+						<textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 200px"></textarea>
+						<label class="" for="floatingTextarea2">Considerações Finais</label>
+					</div>
+				</div>
+			</div>
+		</section>
+	</div>-->
+{% endblock main %}

@@ -1,0 +1,164 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Registros das Entregas
+{% endblock title %}
+{% block title_page %}Dados Beneficiado{% endblock title_page %}
+{% block main %}
+
+<div class="container-expand mx-3 my-5 ">
+    <section class="section border-secondary m-2" style="border: solid 1px; ">
+        <div class="row">
+            <div class="col">
+
+                <div class="card border-secondary ms-4 " style=" max-width: 18rem; margin-top: -20px">
+                    <h5 class="card-title text-black-50 p-2">Dados Pessoais</h5>
+                </div>
+            </div>
+            <div class="col">
+
+                <div class="card border-secondary "
+                    style=" max-width: 18rem; margin-top: -20px; margin-left:auto; margin-right:30px;">
+                    <div class="btn-group p-2" role="group" aria-label="Basic example">
+                        <a href="{% url 'editar_beneficiado'  beneficiado.id %}" class="btn  btn-md btn-outline-primary">Editar Dados</a>
+                        <a href="{%url 'registros_filtro' beneficiado.id %}" class="btn  btn-md btn-outline-primary">Ver Benefícios</a>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row p-2 ">
+            <div class=" col-md-6 col-sm-12 col-12 px-2">
+                <ul class="list-group">
+                    <li class="list-group-item d-flex justify-content-start ">
+                        <strong>Nome Completo: </strong>
+                        <span class="text-dark mx-2">{{beneficiado.nome_beneficiado}} </span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-start ">
+                        <strong>Data de Nascimento: </strong>
+                        <span class="text-dark mx-2">
+                            {% if beneficiado.data_nascimento %}
+                            {{beneficiado.data_nascimento}}
+                            {% else %}
+                            Não Registrado
+                            {% endif %}
+                        </span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-start ">
+                        <strong>Contato: </strong>
+                        <span class="text-dark mx-2">
+                            {% if beneficiado.contato %}
+                            {{beneficiado.contato}}
+                            {% else %}
+                            Não Registrado
+                            {% endif %}
+                        </span>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md-6 col-sm-12 col-12 px-2">
+                <ul class="list-group">
+                    <li class="list-group-item d-flex justify-content-start ">
+                        <strong>Idade: </strong>
+                        <span class="text-dark mx-2">
+                            {% if idade_beneficiado %}
+                            {{idade_beneficiado }}
+                            {% else %}
+                            Não Registrado
+                            {% endif %}
+                        </span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-start ">
+                        <strong>CPF: </strong>
+                        <span class="text-dark mx-2">
+                            {% if beneficiado.cpf %}
+                            {{beneficiado.cpf}}
+                            {% else %}
+                            Não Registrado
+                            {% endif %}
+
+                        </span>
+                    </li>
+
+                    <li class="list-group-item d-flex justify-content-start ">
+                        <strong>RG: </strong>
+                        <span class="text-dark mx-2">
+                            {% if beneficiado.rg %}
+                            {{beneficiado.rg}}
+                            {% else %}
+                            Não Registrado
+                            {% endif %}
+                        </span>
+                    </li>
+                   
+                </ul>
+            </div>
+        </div>
+    </section>
+</div>
+
+<div class="container-expand mx-3 my-5">
+    <section class="section border-secondary m-2" style="border: solid 1px">
+        <div class="card border-secondary ms-4" style="width: 18rem; margin-top: -20px">
+            <h5 class=" card-title text-black-50 p-2">Endereço do Beneficiado</h5>
+        </div>
+        <div class="row p-2  ">
+            <div class="col-md-6 col-sm-12  col-12 px-2">
+                <ul class="list-group">
+                    <li class="list-group-item d-flex justify-content-start ">
+                        <strong>Endereço: </strong>
+                        <span class="text-dark mx-2">
+                            {% if beneficiado.endereco %}
+                            {{beneficiado.endereco}}
+                            {% else %}
+                            Não Registrado
+                            {% endif %}
+
+                        </span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-start ">
+                        <strong>Número: </strong>
+                        <span class="text-dark mx-2">
+                            {% if beneficiado.numero %}
+                            {{beneficiado.numero}}
+                            {% else %}
+                            Não Registrado
+                            {% endif %}
+
+                        </span>
+                    </li>
+
+                </ul>
+            </div>
+            <div class="col-md-6 col-sm-12 col-12 px-2">
+                <ul class="list-group">
+                    <li class="list-group-item d-flex justify-content-start ">
+                        <strong>Bairro: </strong>
+                        <span class="text-dark mx-2">
+                            {% if beneficiado.bairro %}
+                            {{beneficiado.bairro}}
+                            {% else %}
+                            Não Registrado
+                            {% endif %}
+
+                        </span>
+                    </li>
+
+                    <li class="list-group-item d-flex justify-content-start ">
+                        <strong>Complemento: </strong>
+                        <span class="text-dark mx-2">
+                            {% if beneficiado.complemento %}
+                            {{beneficiado.complemento}}
+                            {% else %}
+                            Não Registrado
+                            {% endif %}
+                        </span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+</div>
+
+
+{% endblock main %}

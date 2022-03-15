@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Todos Beneficiados
+{% endblock title %}
+{% block title_page %}Todos Beneficiados{% endblock title_page %}
+{% block main %}
+<!--dados do Registro -->
+<div class="container-fluid my-3 bg-light">
+<table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">Nº</th>
+        <th scope="col">Beneficiado</th>
+        <th scope="col">Bairro</th>
+        <th scope="col">Ultima Entrega</th>
+        <th scope="col">Benefícios Entregues</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for beneficiado in todos_beneficiados %}
+      <tr>
+        <td>{{forloop.counter}}</td>  
+        <td>{{beneficiado.nome}}</td>
+        <td>{{beneficiado.bairro}}</td>
+        <td>{{beneficiado.ultima_entrega}}</td>
+        <td>{{beneficiado.total}}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock main %}
